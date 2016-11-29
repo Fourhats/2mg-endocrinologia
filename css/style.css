@@ -346,6 +346,14 @@ width: 100%;
 
 }
 
+.large_img_endo{
+	text-align: center;
+}
+
+.large_img_endo img{
+	max-width: 45%;
+}
+
 .large_img img{
 	max-width: 100%;
 }
@@ -531,7 +539,25 @@ margin: 0px;
 	.lg_img_area{
 		padding: 0px;
 	}
+	
+	.lg_img_area_endo{
+		padding: 10px;
+	}
 	.title_img{
 		max-width: 100%;
 	}
+}
+
+.eventTime{
+	float: left;
+	width: 30%;
+	color: #009ED5;
+	font-weight: bold;
+	
+}
+
+.eventDescription{
+	float: left;
+	width: 70%;
+	margin-bottom: 15px;
 }
