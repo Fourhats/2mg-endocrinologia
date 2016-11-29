@@ -2,33 +2,44 @@ angular.module("workshopsApp", ['ngRoute'])
     .config(function($routeProvider) {
         $routeProvider
             .when("/", {
-                templateUrl: "views/workshops-list.html",
                 controller: "WorkshopsController",
-                resolve: {
-                    workshops: function(WorkshopsService) {
-                        return WorkshopsService.getWorkshops();
-                    }
-                }
-            })
-            .when("/users/new", {
-                controller: "NewUserController",
-                templateUrl: "views/user-form.html"
-            })
-            .when("/workshops/new", {
-                controller: "NewWorkshopController",
-                templateUrl: "views/workshop-form.html"
-            })
-            .when("/workshops/:workshopId", {
-                controller: "EditWorkshopController",
-                templateUrl: "views/workshop.html"
-            })
-            .when("/inscriptions/:workshopId", {
-                controller: "NewInscriptionController",
-                templateUrl: "views/inscription-form.html"
+                templateUrl: "site.html",
+                // resolve: {
+                //     workshops: function(WorkshopsService) {
+                //         return WorkshopsService.getWorkshops();
+                //     }
+                // }
             })
             .otherwise({
                 redirectTo: "/"
             })
+    })
+
+    .controller("WorkshopsController", function($scope, WorkshopsService) {
+        $scope.isDniSet = false;
+        $scope.workshops = [];
+
+        $scope.submitDni = function(dni) {
+            $scope.userDni = dni;
+
+            $scope.isDniSet = true;
+
+            // divs visibility
+            angular.element('.inner.content').hide();
+            angular.element('#div2').show();
+        }
+
+        $scope.getWorkshops = function() {
+            WorkshopsService.getWorkshops().then(function(response) {
+                $scope.workshops = response.data;
+            });
+        }
+
+        $scope.enroll = function (workshop) {
+            alert('tu dni es ' + $scope.userDni + ' y te estás queriendo inscribir en el workshop ' + workshop.id);
+        }
+
+        $scope.getWorkshops();
     })
 
     .service("WorkshopsService", function($http) {
@@ -100,9 +111,7 @@ angular.module("workshopsApp", ['ngRoute'])
         }
     })
 
-    .controller("WorkshopsController", function($scope, workshops) {
-        $scope.workshops = workshops.data;
-    })
+
     .controller("NewUserController", function($scope, $location, UsersService) {
         $scope.back = function() {
             $location.path("#/");

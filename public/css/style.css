@@ -104,11 +104,6 @@ a
 	padding:20px;
 }
 
-.i-content
-{
-	display: none;
-}
-
 .inner-nav
 {
 	padding:10px 20px;
@@ -502,9 +497,10 @@ margin: 20px 0px 30px;
 	margin-bottom: 10px;
 }
 .workshop_content h3{
-margin: 0px;
+	margin: 0px;
 	color: #0C2477;
 	font-weight: bold;
+	cursor: pointer;
 }
 .workshop_content h4{
 	margin: 0px;
