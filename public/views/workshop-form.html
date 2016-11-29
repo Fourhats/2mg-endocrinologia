@@ -1,0 +1,26 @@
+<div class="row" ng-hide="workshop.id">
+  <div class="col-md-6">
+    <h2>Create new workshop</h2>
+  </div>
+</div>
+<div class="container">
+  <div>
+    <p>
+      <label>Name (required)</label>
+      <input id="name" class="form-control" type="text" ng-model="workshop.name" required>
+    </p>
+    <p>
+      <label>Capacity (required)</label>
+      <input id="capacity" class="form-control" type="text" ng-model="workshop.capacity" required>
+    </p>
+    <p>
+      <label>Description</label>
+      <input id="description" class="form-control" type="text" ng-model="workshop.description" required>
+    </p>
+    
+    <p>
+      <button style="margin-top:20px" class="btn btn-default" ng-click="saveWorkshop(workshop)">Save</button>
+      <button style="margin-top:20px" class="btn btn-default" ng-click="back()">Back</button>
+    </p>
+  </div>
+</div>
