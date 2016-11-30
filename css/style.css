@@ -509,6 +509,10 @@ input[type="number"] {
     cursor: pointer;
 }
 
+.not-allowed-workshop{
+    color: red;
+}
+
 .workshop_content h4 {
     margin: 0px;
 }

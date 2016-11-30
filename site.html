@@ -270,10 +270,18 @@
                             </div>
                             <ul class="work_shop_list">
                                 <li ng-repeat="workshop in workshops">
+
                                     <div class="workshop_content">
-                                        <h3><a ng-click="enroll(workshop)">{{ workshop.title }}</a></h3>
+                                        <div ng-if="workshop.userCanEnroll">
+                                            <h3><a ng-click="enroll(workshop)">{{ workshop.title }}</a></h3>
+                                        </div>
+                                        <div ng-if="!workshop.userCanEnroll">    
+                                            <h3 class="not-allowed-workshop">{{ workshop.title }}</h3>
+                                        </div>    
+
                                         <h4>{{ workshop.description }}</h4>
                                     </div>
+
                                     <div class="vacates">
                                         <span>Vacantes</span>
                                         <br/> {{ workshop.capacity }}

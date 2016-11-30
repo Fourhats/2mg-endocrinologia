@@ -37,7 +37,7 @@ angular.module("workshopsApp", ['ngRoute'])
         }
 
         $scope.getWorkshops = function () {
-            WorkshopsService.getWorkshops().then(function (response) {
+            WorkshopsService.getWorkshops($scope.userDni).then(function (response) {
                 $scope.workshops = response.data;
             });
         }
@@ -49,7 +49,9 @@ angular.module("workshopsApp", ['ngRoute'])
                     dni: $scope.userDni
                 };
 
-                InscriptionsService.saveInscription(inscription);
+                InscriptionsService.saveInscription(inscription).then(function () {
+                    $scope.getWorkshops();
+                });
             }
         }
 
