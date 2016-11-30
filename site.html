@@ -11,8 +11,10 @@
                         <h3 style="color: #858484;">Complete su DNI para ingresar al sitio</h3>
 
                         <div class="login_foram">
-                            <input ng-model="dni" type="text">
-                            <button ng-click="submitDni(dni)" class="login_btn">ok</button>
+                            <form novalidate>
+                                <input ng-model="dni" type="number" ng-minlength="7" ng-maxlength="8">
+                                <button ng-click="submitDni(dni)" class="login_btn">ok</button>
+                            </form>
                         </div>
                         <div class="text_center">
                             <p class="secend_p">En este sitio encontrará toda la información sobre el<br/> 15to Simposio Novo Nordisk® de Hemofilia

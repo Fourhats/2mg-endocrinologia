@@ -1,5 +1,5 @@
 angular.module("workshopsApp", ['ngRoute'])
-    .config(function($routeProvider) {
+    .config(function ($routeProvider) {
         $routeProvider
             .when("/", {
                 controller: "WorkshopsController",
@@ -15,13 +15,14 @@ angular.module("workshopsApp", ['ngRoute'])
             })
     })
 
-    .controller("WorkshopsController", function($scope, WorkshopsService) {
+    .controller("WorkshopsController", function ($scope, WorkshopsService) {
         $scope.isDniSet = false;
         $scope.workshops = [];
 
-        $scope.submitDni = function(dni) {
-            $scope.userDni = dni;
+        $scope.submitDni = function (dni) {
+            if (!Number.isInteger(dni)) return;
 
+            $scope.userDni = dni;
             $scope.isDniSet = true;
 
             // divs visibility
@@ -29,8 +30,8 @@ angular.module("workshopsApp", ['ngRoute'])
             angular.element('#div2').show();
         }
 
-        $scope.getWorkshops = function() {
-            WorkshopsService.getWorkshops().then(function(response) {
+        $scope.getWorkshops = function () {
+            WorkshopsService.getWorkshops().then(function (response) {
                 $scope.workshops = response.data;
             });
         }
@@ -42,126 +43,126 @@ angular.module("workshopsApp", ['ngRoute'])
         $scope.getWorkshops();
     })
 
-    .service("WorkshopsService", function($http) {
-        this.getWorkshops = function() {
-            return $http.get("https://thawing-plains-13266.herokuapp.com/workshops").then(function(response) {
+    .service("WorkshopsService", function ($http) {
+        this.getWorkshops = function () {
+            return $http.get("https://thawing-plains-13266.herokuapp.com/workshops").then(function (response) {
                 return response;
-            }, function(response) {
+            }, function (response) {
                 console.log(response.data.error);
             });
         };
 
-        this.getWorkshop = function(workshopId) {
+        this.getWorkshop = function (workshopId) {
             var url = "https://thawing-plains-13266.herokuapp.com/workshops/" + workshopId;
 
-            return $http.get(url).then(function(response) {
+            return $http.get(url).then(function (response) {
                 return response;
-            }, function(response) {
+            }, function (response) {
                 console.log(response.data.error);
             });
         }
 
-        this.createWorkshop = function(workshop) {
-            return $http.post("https://thawing-plains-13266.herokuapp.com/workshops", workshop).then(function(response) {
+        this.createWorkshop = function (workshop) {
+            return $http.post("https://thawing-plains-13266.herokuapp.com/workshops", workshop).then(function (response) {
                 return response;
-            }, function(response) {
+            }, function (response) {
                 console.log(response.data.error);
             });
         }
     })
-    .service("UsersService", function($http) {
-        this.createUser = function(user) {
-            return $http.post("https://thawing-plains-13266.herokuapp.com/users", user).then(function(response) {
+    .service("UsersService", function ($http) {
+        this.createUser = function (user) {
+            return $http.post("https://thawing-plains-13266.herokuapp.com/users", user).then(function (response) {
                 return response;
-            }, function(response) {
+            }, function (response) {
                 console.log(response.data.error);
             });
         }
     })
-    .service("InscriptionsService", function($http) {
-        this.saveInscription = function(inscription) {
-            return $http.post("https://thawing-plains-13266.herokuapp.com/inscriptions", inscription).then(function(response) {
+    .service("InscriptionsService", function ($http) {
+        this.saveInscription = function (inscription) {
+            return $http.post("https://thawing-plains-13266.herokuapp.com/inscriptions", inscription).then(function (response) {
                 return response;
-            }, function(response) {
+            }, function (response) {
                 console.log(response.data.error);
             });
         }
     })
 
 
-    .controller("NewUserController", function($scope, $location, UsersService) {
-        $scope.back = function() {
+    .controller("NewUserController", function ($scope, $location, UsersService) {
+        $scope.back = function () {
             $location.path("#/");
         }
 
-        $scope.saveUser = function(user) {
-            UsersService.createUser(user).then(function(doc) {
+        $scope.saveUser = function (user) {
+            UsersService.createUser(user).then(function (doc) {
                 $location.path("#/");
-            }, function(response) {
+            }, function (response) {
                 console.log(response);
             });
         }
     })
-    .controller("NewWorkshopController", function($scope, $location, WorkshopsService) {
-        $scope.back = function() {
+    .controller("NewWorkshopController", function ($scope, $location, WorkshopsService) {
+        $scope.back = function () {
             $location.path("#/");
         }
 
-        $scope.saveWorkshop = function(workshop) {
-            WorkshopsService.createWorkshop(workshop).then(function(doc) {
+        $scope.saveWorkshop = function (workshop) {
+            WorkshopsService.createWorkshop(workshop).then(function (doc) {
                 $location.path("#/");
-            }, function(response) {
+            }, function (response) {
                 console.log(response);
             });
         }
     })
-    .controller("EditWorkshopController", function($scope, $routeParams, WorkshopsService) {
-        WorkshopsService.getWorkshop($routeParams.workshopId).then(function(doc) {
+    .controller("EditWorkshopController", function ($scope, $routeParams, WorkshopsService) {
+        WorkshopsService.getWorkshop($routeParams.workshopId).then(function (doc) {
             $scope.workshop = doc;
-        }, function(response) {
+        }, function (response) {
             console.log(response);
         });
 
-        $scope.toggleEdit = function() {
+        $scope.toggleEdit = function () {
             $scope.editMode = true;
             $scope.workshopFormUrl = "workshop-form.html";
         }
 
-        $scope.back = function() {
+        $scope.back = function () {
             $scope.editMode = false;
             $scope.workshopFormUrl = "";
         }
 
-        $scope.saveWorkshop = function(workshop) {
+        $scope.saveWorkshop = function (workshop) {
             WorkshopsService.editWorkshop(workshop);
             $scope.editMode = false;
             $scope.workshopFormUrl = "";
         }
 
-        $scope.deleteWorkshop = function(workshopId) {
+        $scope.deleteWorkshop = function (workshopId) {
             WorkshopsService.deleteWorkshop(workshopId);
         }
     })
-    .controller("NewInscriptionController", function($scope, $routeParams, $location, WorkshopsService, InscriptionsService) {
-        WorkshopsService.getWorkshop($routeParams.workshopId).then(function(doc) {
+    .controller("NewInscriptionController", function ($scope, $routeParams, $location, WorkshopsService, InscriptionsService) {
+        WorkshopsService.getWorkshop($routeParams.workshopId).then(function (doc) {
             $scope.workshop = doc.data;
-        }, function(response) {
+        }, function (response) {
             console.log(response);
         });
 
-        $scope.back = function() {
+        $scope.back = function () {
             $location.path("#/");
         }
 
-        $scope.saveInscription = function(workshop, user) {
+        $scope.saveInscription = function (workshop, user) {
             var inscription = {
                 workshopId: workshop.id,
                 dni: user.dni
             }
 
-            InscriptionsService.saveInscription(inscription).then(function(doc) {
+            InscriptionsService.saveInscription(inscription).then(function (doc) {
                 $location.path("#/");
-            }, function(response) {
+            }, function (response) {
                 console.log(response);
             });
         }
