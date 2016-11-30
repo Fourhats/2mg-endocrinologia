@@ -44,7 +44,7 @@ angular.module("workshopsApp", ['ngRoute'])
 
     .service("WorkshopsService", function($http) {
         this.getWorkshops = function() {
-            return $http.get("/workshops").then(function(response) {
+            return $http.get("https://thawing-plains-13266.herokuapp.com/workshops").then(function(response) {
                 return response;
             }, function(response) {
                 console.log(response.data.error);
@@ -52,7 +52,7 @@ angular.module("workshopsApp", ['ngRoute'])
         };
 
         this.getWorkshop = function(workshopId) {
-            var url = "/workshops/" + workshopId;
+            var url = "https://thawing-plains-13266.herokuapp.com/workshops/" + workshopId;
 
             return $http.get(url).then(function(response) {
                 return response;
@@ -62,39 +62,16 @@ angular.module("workshopsApp", ['ngRoute'])
         }
 
         this.createWorkshop = function(workshop) {
-            return $http.post("/workshops", workshop).then(function(response) {
+            return $http.post("https://thawing-plains-13266.herokuapp.com/workshops", workshop).then(function(response) {
                 return response;
             }, function(response) {
                 console.log(response.data.error);
             });
         }
-
-        // this.editWorkshop = function (workshop) {
-        //   var url = "/workshops/" + workshop._id;
-        //   console.log(workshop._id);
-
-        //   return $http.put(url, workshop).then(function (response) {
-        //     return response;
-        //   }, function (response) {
-        //     console.log("Error editing this workshop.");
-        //     console.log(response);
-        //   });
-        // }
-
-        // this.deleteWorkshop = function (workshopId) {
-        //   var url = "/workshops/" + workshopId;
-
-        //   return $http.delete(url).then(function (response) {
-        //     return response;
-        //   }, function (response) {
-        //     console.log("Error deleting this workshop.");
-        //     console.log(response);
-        //   });
-        // }
     })
     .service("UsersService", function($http) {
         this.createUser = function(user) {
-            return $http.post("/users", user).then(function(response) {
+            return $http.post("https://thawing-plains-13266.herokuapp.com/users", user).then(function(response) {
                 return response;
             }, function(response) {
                 console.log(response.data.error);
@@ -103,7 +80,7 @@ angular.module("workshopsApp", ['ngRoute'])
     })
     .service("InscriptionsService", function($http) {
         this.saveInscription = function(inscription) {
-            return $http.post("/inscriptions", inscription).then(function(response) {
+            return $http.post("https://thawing-plains-13266.herokuapp.com/inscriptions", inscription).then(function(response) {
                 return response;
             }, function(response) {
                 console.log(response.data.error);
