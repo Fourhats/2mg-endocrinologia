@@ -2,7 +2,7 @@ angular.module("workshopsApp", ['ngRoute'])
     .config(function ($routeProvider) {
         $routeProvider
             .when("/", {
-                controller: "WorkshopsController",
+                controller: "MainController",
                 templateUrl: "site.html",
                 // resolve: {
                 //     workshops: function(WorkshopsService) {
@@ -15,19 +15,23 @@ angular.module("workshopsApp", ['ngRoute'])
             })
     })
 
-    .controller("WorkshopsController", function ($scope, WorkshopsService) {
+    .controller("MainController", function ($scope, WorkshopsService, UsersService) {
         $scope.isDniSet = false;
         $scope.workshops = [];
 
         $scope.submitDni = function (dni) {
             if (!Number.isInteger(dni)) return;
 
-            $scope.userDni = dni;
-            $scope.isDniSet = true;
+            UsersService.userExists(dni).then(function (userExists) {
+                if (!userExists) {
+                    $scope.userDni = dni;
+                    $scope.isDniSet = true;
 
-            // divs visibility
-            angular.element('.inner.content').hide();
-            angular.element('#div2').show();
+                    // divs visibility
+                    angular.element('.inner.content').hide();
+                    angular.element('#div2').show();
+                }
+            })
         }
 
         $scope.getWorkshops = function () {
@@ -71,6 +75,16 @@ angular.module("workshopsApp", ['ngRoute'])
         }
     })
     .service("UsersService", function ($http) {
+        this.userExists = function (dni) {
+            var url = "https://thawing-plains-13266.herokuapp.com/users/" + dni;
+
+            return $http.get(url).then(function (response) {
+                return response;
+            }, function (response) {
+                console.log(response.data.error);
+            });
+        }
+
         this.createUser = function (user) {
             return $http.post("https://thawing-plains-13266.herokuapp.com/users", user).then(function (response) {
                 return response;
