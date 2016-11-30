@@ -4,11 +4,6 @@ angular.module("workshopsApp", ['ngRoute'])
             .when("/", {
                 controller: "MainController",
                 templateUrl: "site.html",
-                // resolve: {
-                //     workshops: function(WorkshopsService) {
-                //         return WorkshopsService.getWorkshops();
-                //     }
-                // }
             })
             .otherwise({
                 redirectTo: "/"
@@ -28,6 +23,9 @@ angular.module("workshopsApp", ['ngRoute'])
                 if (userExists) {
                     $scope.userDni = dni;
                     $scope.isDniSet = true;
+
+                    $scope.getWorkshops();
+
 
                     // divs visibility
                     angular.element('.inner.content').hide();
@@ -54,13 +52,13 @@ angular.module("workshopsApp", ['ngRoute'])
                 });
             }
         }
-
-        $scope.getWorkshops();
     })
 
     .service("WorkshopsService", function ($http) {
-        this.getWorkshops = function () {
-            return $http.get("https://thawing-plains-13266.herokuapp.com/workshops").then(function (response) {
+        this.getWorkshops = function (dni) {
+            var url = "https://thawing-plains-13266.herokuapp.com/workshops/" + dni;
+            
+            return $http.get(url).then(function (response) {
                 return response;
             }, function (response) {
                 console.log(response.data.error);
