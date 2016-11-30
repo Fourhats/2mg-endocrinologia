@@ -22,8 +22,10 @@ angular.module("workshopsApp", ['ngRoute'])
         $scope.submitDni = function (dni) {
             if (!Number.isInteger(dni)) return;
 
-            UsersService.userExists(dni).then(function (userExists) {
-                if (!userExists) {
+            UsersService.userExists(dni).then(function (response) {
+                var userExists = response.data;
+
+                if (userExists) {
                     $scope.userDni = dni;
                     $scope.isDniSet = true;
 
