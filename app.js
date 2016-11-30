@@ -15,7 +15,7 @@ angular.module("workshopsApp", ['ngRoute'])
             })
     })
 
-    .controller("MainController", function ($scope, WorkshopsService, UsersService) {
+    .controller("MainController", function ($scope, WorkshopsService, UsersService, InscriptionsService) {
         $scope.isDniSet = false;
         $scope.workshops = [];
 
@@ -43,7 +43,14 @@ angular.module("workshopsApp", ['ngRoute'])
         }
 
         $scope.enroll = function (workshop) {
-            alert('tu dni es ' + $scope.userDni + ' y te estás queriendo inscribir en el workshop ' + workshop.id);
+            if (confirm("¿Confirmar inscripción a " + workshop.title + "?")) {
+                var inscription = {
+                    workshopId: workshop.id,
+                    dni: $scope.userDni
+                };
+
+                InscriptionsService.saveInscription(inscription);
+            }
         }
 
         $scope.getWorkshops();
@@ -101,85 +108,6 @@ angular.module("workshopsApp", ['ngRoute'])
                 return response;
             }, function (response) {
                 console.log(response.data.error);
-            });
-        }
-    })
-
-
-    .controller("NewUserController", function ($scope, $location, UsersService) {
-        $scope.back = function () {
-            $location.path("#/");
-        }
-
-        $scope.saveUser = function (user) {
-            UsersService.createUser(user).then(function (doc) {
-                $location.path("#/");
-            }, function (response) {
-                console.log(response);
-            });
-        }
-    })
-    .controller("NewWorkshopController", function ($scope, $location, WorkshopsService) {
-        $scope.back = function () {
-            $location.path("#/");
-        }
-
-        $scope.saveWorkshop = function (workshop) {
-            WorkshopsService.createWorkshop(workshop).then(function (doc) {
-                $location.path("#/");
-            }, function (response) {
-                console.log(response);
-            });
-        }
-    })
-    .controller("EditWorkshopController", function ($scope, $routeParams, WorkshopsService) {
-        WorkshopsService.getWorkshop($routeParams.workshopId).then(function (doc) {
-            $scope.workshop = doc;
-        }, function (response) {
-            console.log(response);
-        });
-
-        $scope.toggleEdit = function () {
-            $scope.editMode = true;
-            $scope.workshopFormUrl = "workshop-form.html";
-        }
-
-        $scope.back = function () {
-            $scope.editMode = false;
-            $scope.workshopFormUrl = "";
-        }
-
-        $scope.saveWorkshop = function (workshop) {
-            WorkshopsService.editWorkshop(workshop);
-            $scope.editMode = false;
-            $scope.workshopFormUrl = "";
-        }
-
-        $scope.deleteWorkshop = function (workshopId) {
-            WorkshopsService.deleteWorkshop(workshopId);
-        }
-    })
-    .controller("NewInscriptionController", function ($scope, $routeParams, $location, WorkshopsService, InscriptionsService) {
-        WorkshopsService.getWorkshop($routeParams.workshopId).then(function (doc) {
-            $scope.workshop = doc.data;
-        }, function (response) {
-            console.log(response);
-        });
-
-        $scope.back = function () {
-            $location.path("#/");
-        }
-
-        $scope.saveInscription = function (workshop, user) {
-            var inscription = {
-                workshopId: workshop.id,
-                dni: user.dni
-            }
-
-            InscriptionsService.saveInscription(inscription).then(function (doc) {
-                $location.path("#/");
-            }, function (response) {
-                console.log(response);
             });
         }
     });

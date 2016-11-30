@@ -28,8 +28,6 @@
                         </div>
                         <p class="bottom_line" style="color: #858484;">HC943/NOV2016-AR | Material entregado a profesionales de la salud.</p>
                     </div>
-
-                    <!-- Modal -->
                 </div>
 
                 <div class="inner content main lg_img_area" id="div2" ng-show="isDniSet">
@@ -277,8 +275,9 @@
                                         <h4>{{ workshop.description }}</h4>
                                     </div>
                                     <div class="vacates">
-                                        <span>Vacantes</span><br/> {{ workshop.capacity }}
-                                        <hr/> {{ workshop.capacity }}
+                                        <span>Vacantes</span>
+                                        <br/> {{ workshop.capacity }}
+                                        <hr/> {{ workshop.remainingCapacity }}
                                     </div>
                                 </li>
                             </ul>
@@ -366,43 +365,6 @@
         $(this).find('.hoverimg').hide();
         $(this).find('.newimg').show();
     });
-
-    // function checkUser() {
-    //     $.ajax({
-    //         type: "POST",
-    //         url: "login.php?password=" + document.getElementById("password").value,
-    //         success: function (response) {
-    //             $('#loginModal').modal('hide');
-    //             $(".modal-backdrop").hide();
-    //             userID = response;
-    //             if (response == 0) {
-    //                 alert('Usuario o contraseña incorrectos');
-    //                 $('#loginModal').modal('show');
-    //             }
-
-    //         }
-    //     });
-    // }
-
-    // function confirmAsistance() {
-    //     var r = confirm('¿Desea confirmar su asistencia al evento?');
-
-    //     if (r == true) {
-    //         $.ajax({
-    //             type: "POST",
-    //             url: "user.php?id=" + userID,
-    //             success: function (response) {
-    //                 if (response == 0) {
-    //                     alert('Usuario o contraseña incorrectos');
-    //                     $('#loginModal').modal('show');
-    //                 }
-    //             }
-    //         });
-    //     } else {
-    //         //cancelo
-    //     }
-
-    // }
 
     setInterval(function () {
         if ($('#div1').is(':visible')) {
