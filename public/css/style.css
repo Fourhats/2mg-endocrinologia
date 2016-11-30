@@ -556,4 +556,17 @@ margin: 20px 0px 30px;
 	float: left;
 	width: 70%;
 	margin-bottom: 15px;
+	color: #0C2477;
 }
+
+.eventDescription i{
+color: black;
+}
+
+@media (max-width: 320px) {
+  .eventTime{
+	font-size: 10px;
+	
+}
+}
+
