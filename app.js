@@ -5,6 +5,10 @@ angular.module("workshopsApp", ['ngRoute'])
                 controller: "MainController",
                 templateUrl: "site.html",
             })
+            .when("/report", {
+                controller: "ReportController",
+                templateUrl: "report.html",
+            })
             .otherwise({
                 redirectTo: "/"
             })
@@ -53,11 +57,20 @@ angular.module("workshopsApp", ['ngRoute'])
             }
         }
     })
+    .controller("ReportController", function ($scope, WorkshopsService, UsersService, InscriptionsService) {
+        $scope.getInscriptionsReport = function () {
+            WorkshopsService.getInscriptionsReport().then(function (response) {
+                $scope.inscriptionsReport = response.data;
+            });
+        }
+
+        $scope.getInscriptionsReport();
+    })
 
     .service("WorkshopsService", function ($http) {
         this.getWorkshops = function (dni) {
             var url = "https://thawing-plains-13266.herokuapp.com/workshops/" + dni;
-            
+
             return $http.get(url).then(function (response) {
                 return response;
             }, function (response) {
@@ -77,6 +90,14 @@ angular.module("workshopsApp", ['ngRoute'])
 
         this.createWorkshop = function (workshop) {
             return $http.post("https://thawing-plains-13266.herokuapp.com/workshops", workshop).then(function (response) {
+                return response;
+            }, function (response) {
+                console.log(response.data.error);
+            });
+        }
+
+        this.getInscriptionsReport = function () {
+            return $http.get("https://thawing-plains-13266.herokuapp.com/workshops/report").then(function (response) {
                 return response;
             }, function (response) {
                 console.log(response.data.error);
