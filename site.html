@@ -273,7 +273,7 @@
 
                                     <div class="workshop_content">
                                         <div ng-if="workshop.userCanEnroll">
-                                            <h3><a ng-click="enroll(workshop)">{{ workshop.title }}</a></h3>
+                                            <h3 class="allowed-workshop"><a ng-click="enroll(workshop)">{{ workshop.title }}</a></h3>
                                         </div>
                                         <div ng-if="!workshop.userCanEnroll">    
                                             <h3 class="not-allowed-workshop">{{ workshop.title }}</h3>

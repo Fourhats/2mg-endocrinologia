@@ -506,11 +506,14 @@ input[type="number"] {
     margin: 0px;
     color: #0C2477;
     font-weight: bold;
+}
+
+.allowed-workshop {
     cursor: pointer;
 }
 
 .not-allowed-workshop{
-    color: red;
+    color: red !important;
 }
 
 .workshop_content h4 {
