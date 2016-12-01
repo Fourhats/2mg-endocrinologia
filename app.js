@@ -19,7 +19,9 @@ angular.module("workshopsApp", ['ngRoute'])
         $scope.workshops = [];
 
         $scope.submitDni = function (dni) {
-            if (!Number.isInteger(dni)) return;
+            if (!Number.isInteger(dni)) {
+                alert('DNI no válido');
+            }
 
             UsersService.userExists(dni).then(function (response) {
                 var userExists = response.data;
@@ -34,6 +36,8 @@ angular.module("workshopsApp", ['ngRoute'])
                     // divs visibility
                     angular.element('.inner.content').hide();
                     angular.element('#div2').show();
+                } else {
+                    alert('DNI no válido');
                 }
             })
         }
@@ -97,7 +101,7 @@ angular.module("workshopsApp", ['ngRoute'])
         }
 
         this.getInscriptionsReport = function () {
-            return $http.get("https://thawing-plains-13266.herokuapp.com/workshops/report").then(function (response) {
+            return $http.get("https://thawing-plains-13266.herokuapp.com/inscriptions/report").then(function (response) {
                 return response;
             }, function (response) {
                 console.log(response.data.error);
