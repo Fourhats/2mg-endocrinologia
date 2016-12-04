@@ -19,8 +19,9 @@ angular.module("workshopsApp", ['ngRoute'])
         $scope.workshops = [];
 
         $scope.submitDni = function (dni) {
-            if (!Number.isInteger(dni)) {
+            if (!isNumber(dni)) {
                 alert('DNI no válido');
+                return;
             }
 
             UsersService.userExists(dni).then(function (response) {
@@ -32,14 +33,19 @@ angular.module("workshopsApp", ['ngRoute'])
 
                     $scope.getWorkshops();
 
-
                     // divs visibility
                     angular.element('.inner.content').hide();
                     angular.element('#div2').show();
                 } else {
                     alert('DNI no válido');
+                    return;
                 }
             })
+        }
+
+        function isNumber(s) {
+            var x = +s; //cast
+            return x.toString() === s; //compare
         }
 
         $scope.getWorkshops = function () {
