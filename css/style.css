@@ -597,3 +597,12 @@ input[type="number"] {
     left: 0;
     z-index: 100;
 }
+
+.inscriptions-report h2 {
+    font-size: 20px;
+    color: darkslategray;
+}
+
+.inscriptions-report ul {
+    color: darkslategray;
+}

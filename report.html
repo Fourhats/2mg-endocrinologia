@@ -3,11 +3,11 @@
         <div class="mobile-wrapper clearfix">
             <div class="app-body clearfix">
                 <div class="main content" id="div1" ng-show="!isDniSet">
-                    <div ng-repeat="inscription in inscriptionsReport">
+                    <div ng-repeat="inscription in inscriptionsReport" class="inscriptions-report">
                         <h2>{{ inscription.title }}</h2>
                         <ul ng-repeat="participant in inscription.participants">
                             <li>
-                                {{ participant.name }} - (DNI:{{ participant.dni }}) 
+                                {{ participant.name }} - DNI: {{ participant.dni }} 
                             </li>
                         </ul>
                     </div>

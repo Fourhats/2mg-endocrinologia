@@ -73,9 +73,13 @@ angular.module("workshopsApp", ['ngRoute'])
         }
     })
     .controller("ReportController", function ($scope, WorkshopsService, UsersService, InscriptionsService) {
+        $scope.isLoading = true;
+
         $scope.getInscriptionsReport = function () {
             WorkshopsService.getInscriptionsReport().then(function (response) {
                 $scope.inscriptionsReport = response.data;
+            }).finally(function () {
+                $scope.isLoading = false;
             });
         }
 
